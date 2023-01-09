@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
@@ -122,7 +123,6 @@ namespace RunMultipleBatFiles
 
                 //標準出力タブに変更
                 tabCntrl.SelectedTab = pageStdOut;
-
                 Application.DoEvents();
 
                 //処理実行
@@ -189,14 +189,16 @@ namespace RunMultipleBatFiles
                         if (!string.IsNullOrWhiteSpace(cmd_main))
                         {
                             txtStdOut.Text += "\r\n>> " + cmd_main + "\r\n";
+                            Application.DoEvents();
+
                             runCommand(cmd_main);
+                            Application.DoEvents();
                         }
 
                         //スクロールバーを一番下に移動する
                         txtStdOut.SelectionStart = txtStdOut.Text.Length;
                         txtStdOut.Focus();
                         txtStdOut.ScrollToCaret();
-
                         Application.DoEvents();
                     }
                 }
