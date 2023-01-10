@@ -1,42 +1,26 @@
-# RunMultipleBatFiles
+# install_asciidoctor-pdf
 
-複数のバッチファイルを実行するアプリケーションです。
+asciidoctor-pdfをインストールするためのbatファイルです。Ruby2.7／3.0／3.1系、x64ビットWindows用です。
 
-Windows10 64bit .NET Framework4.8.1で作成されています。
+asciidoctor-pdf-cjk対応版は、上部のtagsの「For_asciidoctor-pdf-cjk」を参考にしてください。
 
-実行方法は、Listタブにバッチファイル名（もしくは1行コマンド）を1行ごとに記述し、
-[Run]ボタンを押すと実行できます。標準出力はStdOutタブに表示されます。
+## batファイルによるインストール方法
 
-Listタブの記述例：
+1. [こちら](https://rubyinstaller.org/downloads/)から、Ruby2.7／3.0／3.1系いずれかのx64ビットWindows用のインストーラをダウンロードします。(+Devkitじゃない方でOKです)<br><br>
+1. batファイルのあるフォルダにRubyのインストーラをコピーします。<br><br>
+1. すでにインストールされているRubyは必ずアンインストールし、残ったフォルダは削除してください。<br><br>
+1. Proxyを設定する時は、「http_proxy.txt」と「https_proxy.txt」に`http://プロキシのアドレス:ポート番号`のように入力してください。`http://`を付け忘れないことに注意してください。また、`http://user:password@・・・`とするとエラーになるようです。<br><br>
+1. 「1_Install_Ruby_x64.bat」 ⇒ 「2_Install_Modules.bat」 ⇒ 「3_Install_Fonts.bat」の順で実行します。
 
-```
-A.bat
-B.bat
-C.bat
-```
+## RunMultipleBatFiles.exeによるインストール方法
 
-上記の例では、A.bat⇒B.bat⇒C.batの順番で実行されます。
+RunMultipleBatFiles.exeは複数のバッチファイル（もしくは1行DOSコマンド）を実行するアプリケーションです。
 
-さらに詳細に言えば、以下のようになります。
+1. [こちら](https://rubyinstaller.org/downloads/)から、Ruby2.7／3.0／3.1系いずれかのx64ビットWindows用のインストーラをダウンロードします。(+Devkitじゃない方でOKです)<br><br>
+1. batファイルのあるフォルダにRubyのインストーラをコピーします。<br><br>
+1. すでにインストールされているRubyは必ずアンインストールし、残ったフォルダは削除してください。<br><br>
+1. RunMultipleBatFiles.exeを起動します。<br><br>
+1. Proxyを設定する時は、SettingsタブのVariableに「http_proxy」と「https_proxy」を、Valueに`http://プロキシのアドレス:ポート番号`を設定してください。`http://`を付け忘れないことに注意してください。<br><br>
+1. [Run]でインストールが開始します。
 
-Settingsタブの環境変数をプロセス環境変数にセット<br>
-↓<br>
-A.bat<br>
-↓<br>
-システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathにセット<br>
-↓<br>
-B.bat<br>
-システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathにセット<br>
-↓<br>
-C.bat
-
-本アプリケーションのポイントとしては、
-
-1. 1行実行するごとに、システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathに更新します。つまり、A.batでPythonやRubyのインストールが行われシステム環境変数Pathが変更された場合、B.batでも更新された環境変数Pathを利用できます。<br><br>
-1. 全てのバッチ処理で扱える環境変数をSettingsタブで10個まで設定することができます。http_proxyやhttps_proxyなどの環境変数をここで設定しておけば全てのバッチ処理で利用できます。setxなどを使っているわけではないので、本アプリケーションを終了後削除する必要はありません。<br><br>
-1. RunMultipleBatFiles.exeと同じフォルダにあるList_Bat.txtに上記の例のような記述を行っておけば、起動時にListタブに読み込んでくれます。<br><br>
-1. RunMultipleBatFiles.exeと同じフォルダにあるRunMultipleBatFiles.xmlを適切に記述すれば、起動時にSettingsタブに環境変数を読み込んでくれます。
-
-## __注意点__
-
-非同期実行がうまく実装できていません。`Application.DoEvents()`でごまかしていますが、時間のかかる処理だと`txtStdOut.Text += proc.StandardOutput.ReadToEnd()`で固まったように見えます。処理が完了するまでお待ちください。
+フォントをダウンロードするのは時間がかかります。固まったように見えますがしばらくお待ちください。
