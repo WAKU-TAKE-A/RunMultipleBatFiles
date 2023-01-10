@@ -152,6 +152,7 @@ namespace RunMultipleBatFiles
             //出力を読み取れるようにする
             proc.StartInfo.UseShellExecute = false;
             proc.StartInfo.RedirectStandardOutput = true;
+            proc.StartInfo.RedirectStandardError = true;
             proc.StartInfo.RedirectStandardInput = false;
 
             //ウィンドウを表示しないようにする
@@ -160,9 +161,24 @@ namespace RunMultipleBatFiles
 
         private void runCommand(string cmd)
         {
-            proc.StartInfo.Arguments = @"/c " + cmd;
-            proc.Start();
-            txtStdOut.Text += proc.StandardOutput.ReadToEnd();
+            try
+            {
+                proc.StartInfo.Arguments = @"/c " + cmd;
+                proc.Start();
+                txtStdOut.Text += proc.StandardOutput.ReadToEnd();
+                string err = proc.StandardError.ReadToEnd();
+
+                if (!string.IsNullOrEmpty(err))
+                {
+                    throw new Exception(err);
+                }
+            }
+            catch (Exception ex)
+            {
+                proc.Close();
+                throw ex;
+            }
+            
             proc.WaitForExit();
             proc.Close();
         }
@@ -209,7 +225,7 @@ namespace RunMultipleBatFiles
             }
             catch (Exception ex)
             {
-                txtStdOut.Text += "\r\nException:r\n" + ex.ToString() + "\r\n";
+                txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
             }
             finally
             {
