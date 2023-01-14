@@ -78,6 +78,9 @@ namespace RunMultipleBatFiles
                 }
 
                 txtCD.Text = Environment.CurrentDirectory;
+
+                //標準エラーを無視するか否か
+                chkIgnoreStdErr.Checked = settings.IgnoreStdErr;
             }
             catch (Exception ex)
             {
@@ -114,18 +117,19 @@ namespace RunMultipleBatFiles
         {
             try
             {
-                lstCmd.Content = txtLstCmd.Text;
+                lstCmd.Content = txtLstCmd.Text;                
+                settings.CurrentDirectory = txtCD.Text;
+                settings.IgnoreStdErr = chkIgnoreStdErr.Checked;
                 txtStdOut.Text = "";
 
-                //プロセスの環境変数をクリアする
+                //プロセスの環境変数は一度クリアしてから更新する
                 for (int i = 0; i < settings.GetNum(); i++)
                 {
                     if (!string.IsNullOrWhiteSpace(settings.Variables[i]))
                         Environment.SetEnvironmentVariable(settings.Variables[i], null, EnvironmentVariableTarget.Process);
                 }
 
-                //プロセスの環境変数を更新
-                settings.SeEnvVars(lstEnvVarBox);
+                settings.SetEnvVars(lstEnvVarBox);
 
                 for (int i = 0; i < settings.GetNum(); i++)
                 {
@@ -185,7 +189,7 @@ namespace RunMultipleBatFiles
                             scrollToBottom();
                             Application.DoEvents();
 
-                            dos.RunOneLine(cmd);
+                            dos.RunOneLine(cmd, settings.IgnoreStdErr);
                             //改行コードを\r\nに変換
                             string tmp = Regex.Replace(dos.StandardOutput, "\\n", "\r\n");
                             tmp = Regex.Replace(tmp, "\\r\\r", "\r");

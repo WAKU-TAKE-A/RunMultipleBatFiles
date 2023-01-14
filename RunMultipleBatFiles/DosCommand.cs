@@ -7,7 +7,7 @@ namespace RunMultipleBatFiles
     {
         public string StandardOutput = "";
 
-        public bool RunOneLine(string command = "")
+        public bool RunOneLine(string command = "", bool ignoreStdErr = false)
         {
             // 結果をfalseにセット
             bool bret = false;
@@ -37,7 +37,7 @@ namespace RunMultipleBatFiles
                 StandardOutput = p.StandardOutput.ReadToEnd();
                 string err = p.StandardError.ReadToEnd();
 
-                if (!string.IsNullOrEmpty(err))
+                if (!ignoreStdErr && !string.IsNullOrEmpty(err))
                 {
                     throw new Exception(err);
                 }

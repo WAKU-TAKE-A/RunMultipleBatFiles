@@ -19,6 +19,7 @@ namespace RunMultipleBatFiles
         public string[] Variables = new string[10] { "", "", "", "", "", "", "", "", "", "" };
         public string[] Values = new string[10] { "", "", "", "", "", "", "", "", "", "" };
         public string CurrentDirectory = "";
+        public bool IgnoreStdErr = false;
 
         public SettingParams()
         {
@@ -45,6 +46,7 @@ namespace RunMultipleBatFiles
                 this.Variables = tmp.Variables;
                 this.Values = tmp.Values;
                 this.CurrentDirectory = tmp.CurrentDirectory;
+                this.IgnoreStdErr = tmp.IgnoreStdErr;
                 sr.Close();
             }
         }
@@ -71,7 +73,7 @@ namespace RunMultipleBatFiles
             }
         }
 
-        public void SeEnvVars(Dictionary<TextBox, TextBox> lstEnvVarBox)
+        public void SetEnvVars(Dictionary<TextBox, TextBox> lstEnvVarBox)
         {
             try
             {

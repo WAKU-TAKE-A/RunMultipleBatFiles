@@ -35,6 +35,9 @@
             this.pageStdOut = new System.Windows.Forms.TabPage();
             this.pageSettings = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.bttnSelect = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCD = new System.Windows.Forms.TextBox();
             this.txtValue10 = new System.Windows.Forms.TextBox();
             this.txtVar10 = new System.Windows.Forms.TextBox();
             this.txtValue09 = new System.Windows.Forms.TextBox();
@@ -58,9 +61,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRun = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.txtCD = new System.Windows.Forms.TextBox();
-            this.bttnSelect = new System.Windows.Forms.Button();
+            this.chkIgnoreStdErr = new System.Windows.Forms.CheckBox();
             this.tabCntrl.SuspendLayout();
             this.pageList.SuspendLayout();
             this.pageStdOut.SuspendLayout();
@@ -79,14 +80,14 @@
             this.txtStdOut.TabIndex = 0;
             this.txtStdOut.Text = "---StdOut---";
             // 
-            // txtBatMain
+            // txtLstCmd
             // 
             this.txtLstCmd.Dock = System.Windows.Forms.DockStyle.Fill;
             this.txtLstCmd.Location = new System.Drawing.Point(3, 3);
             this.txtLstCmd.Multiline = true;
-            this.txtLstCmd.Name = "txtBatMain";
+            this.txtLstCmd.Name = "txtLstCmd";
             this.txtLstCmd.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLstCmd.Size = new System.Drawing.Size(553, 324);
+            this.txtLstCmd.Size = new System.Drawing.Size(570, 387);
             this.txtLstCmd.TabIndex = 1;
             this.txtLstCmd.Text = "---List---";
             // 
@@ -102,7 +103,7 @@
             this.tabCntrl.Location = new System.Drawing.Point(0, 12);
             this.tabCntrl.Name = "tabCntrl";
             this.tabCntrl.SelectedIndex = 0;
-            this.tabCntrl.Size = new System.Drawing.Size(567, 357);
+            this.tabCntrl.Size = new System.Drawing.Size(584, 380);
             this.tabCntrl.TabIndex = 2;
             // 
             // pageList
@@ -111,7 +112,7 @@
             this.pageList.Location = new System.Drawing.Point(4, 23);
             this.pageList.Name = "pageList";
             this.pageList.Padding = new System.Windows.Forms.Padding(3);
-            this.pageList.Size = new System.Drawing.Size(559, 330);
+            this.pageList.Size = new System.Drawing.Size(576, 393);
             this.pageList.TabIndex = 1;
             this.pageList.Text = "List";
             this.pageList.UseVisualStyleBackColor = true;
@@ -133,7 +134,7 @@
             this.pageSettings.Location = new System.Drawing.Point(4, 23);
             this.pageSettings.Name = "pageSettings";
             this.pageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSettings.Size = new System.Drawing.Size(559, 330);
+            this.pageSettings.Size = new System.Drawing.Size(576, 353);
             this.pageSettings.TabIndex = 4;
             this.pageSettings.Text = "Settings";
             this.pageSettings.UseVisualStyleBackColor = true;
@@ -141,6 +142,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.chkIgnoreStdErr);
             this.panel1.Controls.Add(this.bttnSelect);
             this.panel1.Controls.Add(this.label3);
             this.panel1.Controls.Add(this.txtCD);
@@ -169,8 +171,34 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(553, 324);
+            this.panel1.Size = new System.Drawing.Size(570, 347);
             this.panel1.TabIndex = 0;
+            // 
+            // bttnSelect
+            // 
+            this.bttnSelect.Location = new System.Drawing.Point(456, 290);
+            this.bttnSelect.Name = "bttnSelect";
+            this.bttnSelect.Size = new System.Drawing.Size(75, 23);
+            this.bttnSelect.TabIndex = 23;
+            this.bttnSelect.Text = "Select";
+            this.bttnSelect.UseVisualStyleBackColor = true;
+            this.bttnSelect.Click += new System.EventHandler(this.bttnSelect_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 276);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "CurrentDirectory";
+            // 
+            // txtCD
+            // 
+            this.txtCD.Location = new System.Drawing.Point(5, 292);
+            this.txtCD.Name = "txtCD";
+            this.txtCD.Size = new System.Drawing.Size(445, 20);
+            this.txtCD.TabIndex = 21;
             // 
             // txtValue10
             // 
@@ -334,45 +362,29 @@
             // 
             this.bttnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bttnRun.Location = new System.Drawing.Point(4, 371);
+            this.bttnRun.Location = new System.Drawing.Point(4, 394);
             this.bttnRun.Name = "bttnRun";
-            this.bttnRun.Size = new System.Drawing.Size(559, 25);
+            this.bttnRun.Size = new System.Drawing.Size(576, 25);
             this.bttnRun.TabIndex = 3;
             this.bttnRun.Text = "Run";
             this.bttnRun.UseVisualStyleBackColor = true;
             this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
             // 
-            // label3
+            // chkIgnoreStdErr
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(2, 276);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(105, 13);
-            this.label3.TabIndex = 22;
-            this.label3.Text = "CurrentDirectory";
-            // 
-            // txtCD
-            // 
-            this.txtCD.Location = new System.Drawing.Point(5, 292);
-            this.txtCD.Name = "txtCD";
-            this.txtCD.Size = new System.Drawing.Size(445, 20);
-            this.txtCD.TabIndex = 21;
-            // 
-            // bttnSelect
-            // 
-            this.bttnSelect.Location = new System.Drawing.Point(456, 290);
-            this.bttnSelect.Name = "bttnSelect";
-            this.bttnSelect.Size = new System.Drawing.Size(75, 23);
-            this.bttnSelect.TabIndex = 23;
-            this.bttnSelect.Text = "Select";
-            this.bttnSelect.UseVisualStyleBackColor = true;
-            this.bttnSelect.Click += new System.EventHandler(this.bttnSelect_Click);
+            this.chkIgnoreStdErr.AutoSize = true;
+            this.chkIgnoreStdErr.Location = new System.Drawing.Point(6, 319);
+            this.chkIgnoreStdErr.Name = "chkIgnoreStdErr";
+            this.chkIgnoreStdErr.Size = new System.Drawing.Size(145, 17);
+            this.chkIgnoreStdErr.TabIndex = 24;
+            this.chkIgnoreStdErr.Text = "Ignore standard error";
+            this.chkIgnoreStdErr.UseVisualStyleBackColor = true;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(567, 398);
+            this.ClientSize = new System.Drawing.Size(584, 421);
             this.Controls.Add(this.bttnRun);
             this.Controls.Add(this.tabCntrl);
             this.Name = "Form1";
@@ -424,6 +436,7 @@
         private System.Windows.Forms.Button bttnSelect;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCD;
+        private System.Windows.Forms.CheckBox chkIgnoreStdErr;
     }
 }
 
