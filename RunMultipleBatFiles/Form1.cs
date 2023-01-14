@@ -23,40 +23,25 @@ namespace RunMultipleBatFiles
     public partial class Form1 : Form
     {
         //定数
-        private readonly string FN_BAT_MAIN = AppDomain.CurrentDomain.BaseDirectory + "List_Bat.txt";
-        private readonly string FN_XML = AppDomain.CurrentDomain.BaseDirectory + "RunMultipleBatFiles.xml";
+        private readonly string FN_BAT_MAIN = AppDomain.CurrentDomain.BaseDirectory + "List_Bat.txt";        
 
         //Processオブジェクト
         private System.Diagnostics.Process proc = null;
 
         //環境変数リストクラス関連
-        private ListEnvironmentVariable lstEnvVar = new ListEnvironmentVariable();
+        private IO_EnvVars_To_TextBox lstEnvVar = new IO_EnvVars_To_TextBox();
         private Dictionary<TextBox, TextBox> lstEnvVarBox = new Dictionary<TextBox, TextBox>();
+
+        //DOSコマンド実行
+        private DosCommand dos = new DosCommand();
 
         //コンストラクタ
         public Form1()
         {
             InitializeComponent();
 
-            //環境変数リスト用XMLファイルの有無チェック
-            //ある場合はXMLから逆シリアライズ
-            //無い場合はシリアライズ
-            XmlSerializer ser = new XmlSerializer(typeof(ListEnvironmentVariable));
-
-            if (!File.Exists(FN_XML))
-            {                
-                StreamWriter sw = new StreamWriter(FN_XML, false, new UTF8Encoding(false));
-                ser.Serialize(sw, lstEnvVar);
-                sw.Close();
-            }
-            else
-            {
-                StreamReader sr = new StreamReader(FN_XML, new UTF8Encoding(false));
-                lstEnvVar = (ListEnvironmentVariable)ser.Deserialize(sr);
-                sr.Close();
-            }
-
             //環境変数リスト関連のコントロールに値をセットする
+            lstEnvVar.ReadFromXML();
             lstEnvVarBox.Add(txtVar01, txtValue01);
             lstEnvVarBox.Add(txtVar02, txtValue02);
             lstEnvVarBox.Add(txtVar03, txtValue03);
@@ -93,9 +78,6 @@ namespace RunMultipleBatFiles
 
             //タイトルの表示
             this.Text = "RunMultipleBatFiles " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
-
-            //Processオブジェクトの生成
-            newProc();
         }
 
         //イベント
@@ -141,46 +123,12 @@ namespace RunMultipleBatFiles
             }
         }
 
-        //メソッド
-        private void newProc()
+        private void scrollToBottom()
         {
-            proc = new System.Diagnostics.Process();
-
-            //ComSpec(cmd.exe)のパスを取得して、FileNameプロパティに指定
-            proc.StartInfo.FileName = System.Environment.GetEnvironmentVariable("ComSpec");
-
-            //出力を読み取れるようにする
-            proc.StartInfo.UseShellExecute = false;
-            proc.StartInfo.RedirectStandardOutput = true;
-            proc.StartInfo.RedirectStandardError = true;
-            proc.StartInfo.RedirectStandardInput = false;
-
-            //ウィンドウを表示しないようにする
-            proc.StartInfo.CreateNoWindow = true;
-        }
-
-        private void runCommand(string cmd)
-        {
-            try
-            {
-                proc.StartInfo.Arguments = @"/c " + cmd;
-                proc.Start();
-                txtStdOut.Text += proc.StandardOutput.ReadToEnd();
-                string err = proc.StandardError.ReadToEnd();
-
-                if (!string.IsNullOrEmpty(err))
-                {
-                    throw new Exception(err);
-                }
-            }
-            catch (Exception ex)
-            {
-                proc.Close();
-                throw ex;
-            }
-            
-            proc.WaitForExit();
-            proc.Close();
+            //スクロールバーを一番下に移動する
+            txtStdOut.SelectionStart = txtStdOut.Text.Length;
+            txtStdOut.Focus();
+            txtStdOut.ScrollToCaret();
         }
 
         private void runMultipleBat()
@@ -188,12 +136,12 @@ namespace RunMultipleBatFiles
             try
             {
                 //改行で分割
-                string[] lst_bat_main = string.IsNullOrWhiteSpace(txtBatMain.Text) ? null : Regex.Split(txtBatMain.Text, "\r\n");
+                string[] lst_cmd = string.IsNullOrWhiteSpace(txtBatMain.Text) ? null : Regex.Split(txtBatMain.Text, "\r\n");
 
                 // 1行づつ実行
-                if (lst_bat_main != null)
+                if (lst_cmd != null)
                 {
-                    foreach (var cmd_main in lst_bat_main)
+                    foreach (var cmd in lst_cmd)
                     {
                         string systemPath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Machine);
                         string userPath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.User);
@@ -202,19 +150,18 @@ namespace RunMultipleBatFiles
                         //string procPath = Environment.GetEnvironmentVariable("path", EnvironmentVariableTarget.Process);
 
                         //処理
-                        if (!string.IsNullOrWhiteSpace(cmd_main))
+                        if (!string.IsNullOrWhiteSpace(cmd))
                         {
-                            txtStdOut.Text += "\r\n>> " + cmd_main + "\r\n";
+                            txtStdOut.Text += "\r\n>> " + cmd + "\r\n";
+                            scrollToBottom();
                             Application.DoEvents();
 
-                            runCommand(cmd_main);
+                            dos.RunOneLine(cmd);
+                            txtStdOut.Text += dos.StandardOutput;
                             Application.DoEvents();
                         }
 
-                        //スクロールバーを一番下に移動する
-                        txtStdOut.SelectionStart = txtStdOut.Text.Length;
-                        txtStdOut.Focus();
-                        txtStdOut.ScrollToCaret();
+                        scrollToBottom();
                         Application.DoEvents();
                     }
                 }

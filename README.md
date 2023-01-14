@@ -19,6 +19,8 @@ C.bat
 
 さらに詳細に言えば、以下のようになります。
 
+システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathにセット<br>
+↓<br>
 Settingsタブの環境変数をプロセス環境変数にセット<br>
 ↓<br>
 A.bat<br>
@@ -26,6 +28,7 @@ A.bat<br>
 システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathにセット<br>
 ↓<br>
 B.bat<br>
+↓<br>
 システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathにセット<br>
 ↓<br>
 C.bat
@@ -34,7 +37,8 @@ C.bat
 
 1. 1行実行するごとに、システム環境変数Pathとユーザー環境変数Pathをプロセス環境変数Pathに更新します。つまり、A.batでPythonやRubyのインストールが行われシステム環境変数Pathが変更された場合、B.batでも更新された環境変数Pathを利用できます。<br><br>
 1. 全てのバッチ処理で扱える環境変数をSettingsタブで10個まで設定することができます。http_proxyやhttps_proxyなどの環境変数をここで設定しておけば全てのバッチ処理で利用できます。setxなどを使っているわけではないので、本アプリケーションを終了後削除する必要はありません。<br><br>
-1. RunMultipleBatFiles.exeと同じフォルダにあるList_Bat.txtに上記の例のような記述を行っておけば、起動時にListタブに読み込んでくれます。<br><br>
+1. 標準エラーが出力された場合、例外が発生し、それ以降のバッチ処理は行われません。
+1. RunMultipleBatFiles.exeと同じフォルダにあるList_Bat.txtに上記の例のようなbatファイルの記述を書いておけば、起動時にListタブに読み込んでくれます。<br><br>
 1. RunMultipleBatFiles.exeと同じフォルダにあるRunMultipleBatFiles.xmlを適切に記述すれば、起動時にSettingsタブに環境変数を読み込んでくれます。
 
 ## __注意点__

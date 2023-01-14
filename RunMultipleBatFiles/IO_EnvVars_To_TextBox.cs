@@ -1,23 +1,49 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace RunMultipleBatFiles
 {
     /// <summary>
-    /// 環境変数リストクラス
+    /// 環境変数リストをTextBoxに入出力するクラス
     /// </summary>
-    public class ListEnvironmentVariable
+    public class IO_EnvVars_To_TextBox
     {
+        public readonly string FN_XML = AppDomain.CurrentDomain.BaseDirectory + "RunMultipleBatFiles.xml";
         public string[] Variables = new string[10] { "", "", "", "", "", "", "", "", "", "" };
         public string[] Values = new string[10] { "", "", "", "", "", "", "", "", "", "" };
 
-        public ListEnvironmentVariable()
+        public IO_EnvVars_To_TextBox()
         {
             // do nothing
+        }
+
+        public void ReadFromXML()
+        {
+            //環境変数リスト用XMLファイルの有無チェック
+            //ある場合はXMLから逆シリアライズ
+            //無い場合はシリアライズ
+            XmlSerializer ser = new XmlSerializer(typeof(IO_EnvVars_To_TextBox));
+
+            if (!File.Exists(FN_XML))
+            {
+                StreamWriter sw = new StreamWriter(FN_XML, false, new UTF8Encoding(false));
+                ser.Serialize(sw, this);
+                sw.Close();
+            }
+            else
+            {
+                StreamReader sr = new StreamReader(FN_XML, new UTF8Encoding(false));
+                IO_EnvVars_To_TextBox tmp = (IO_EnvVars_To_TextBox)ser.Deserialize(sr);
+                this.Variables = tmp.Variables;
+                this.Values = tmp.Values;
+                sr.Close();
+            }
         }
 
         public void Get(Dictionary<TextBox, TextBox> lstEnvVarBox)
