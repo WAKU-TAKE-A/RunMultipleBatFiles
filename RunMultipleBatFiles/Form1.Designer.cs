@@ -29,35 +29,38 @@
         private void InitializeComponent()
         {
             this.txtStdOut = new System.Windows.Forms.TextBox();
-            this.txtBatMain = new System.Windows.Forms.TextBox();
+            this.txtLstCmd = new System.Windows.Forms.TextBox();
             this.tabCntrl = new System.Windows.Forms.TabControl();
             this.pageList = new System.Windows.Forms.TabPage();
             this.pageStdOut = new System.Windows.Forms.TabPage();
             this.pageSettings = new System.Windows.Forms.TabPage();
-            this.bttnRun = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.txtVar01 = new System.Windows.Forms.TextBox();
-            this.txtValue01 = new System.Windows.Forms.TextBox();
-            this.txtValue02 = new System.Windows.Forms.TextBox();
-            this.txtVar02 = new System.Windows.Forms.TextBox();
-            this.txtValue03 = new System.Windows.Forms.TextBox();
-            this.txtVar03 = new System.Windows.Forms.TextBox();
-            this.txtValue04 = new System.Windows.Forms.TextBox();
-            this.txtVar04 = new System.Windows.Forms.TextBox();
-            this.txtValue05 = new System.Windows.Forms.TextBox();
-            this.txtVar05 = new System.Windows.Forms.TextBox();
-            this.txtValue06 = new System.Windows.Forms.TextBox();
-            this.txtVar06 = new System.Windows.Forms.TextBox();
-            this.txtValue07 = new System.Windows.Forms.TextBox();
-            this.txtVar07 = new System.Windows.Forms.TextBox();
-            this.txtValue08 = new System.Windows.Forms.TextBox();
-            this.txtVar08 = new System.Windows.Forms.TextBox();
-            this.txtValue09 = new System.Windows.Forms.TextBox();
-            this.txtVar09 = new System.Windows.Forms.TextBox();
             this.txtValue10 = new System.Windows.Forms.TextBox();
             this.txtVar10 = new System.Windows.Forms.TextBox();
+            this.txtValue09 = new System.Windows.Forms.TextBox();
+            this.txtVar09 = new System.Windows.Forms.TextBox();
+            this.txtValue08 = new System.Windows.Forms.TextBox();
+            this.txtVar08 = new System.Windows.Forms.TextBox();
+            this.txtValue07 = new System.Windows.Forms.TextBox();
+            this.txtVar07 = new System.Windows.Forms.TextBox();
+            this.txtValue06 = new System.Windows.Forms.TextBox();
+            this.txtVar06 = new System.Windows.Forms.TextBox();
+            this.txtValue05 = new System.Windows.Forms.TextBox();
+            this.txtVar05 = new System.Windows.Forms.TextBox();
+            this.txtValue04 = new System.Windows.Forms.TextBox();
+            this.txtVar04 = new System.Windows.Forms.TextBox();
+            this.txtValue03 = new System.Windows.Forms.TextBox();
+            this.txtVar03 = new System.Windows.Forms.TextBox();
+            this.txtValue02 = new System.Windows.Forms.TextBox();
+            this.txtVar02 = new System.Windows.Forms.TextBox();
+            this.txtValue01 = new System.Windows.Forms.TextBox();
+            this.txtVar01 = new System.Windows.Forms.TextBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.bttnRun = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtCD = new System.Windows.Forms.TextBox();
+            this.bttnSelect = new System.Windows.Forms.Button();
             this.tabCntrl.SuspendLayout();
             this.pageList.SuspendLayout();
             this.pageStdOut.SuspendLayout();
@@ -78,14 +81,14 @@
             // 
             // txtBatMain
             // 
-            this.txtBatMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.txtBatMain.Location = new System.Drawing.Point(3, 3);
-            this.txtBatMain.Multiline = true;
-            this.txtBatMain.Name = "txtBatMain";
-            this.txtBatMain.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtBatMain.Size = new System.Drawing.Size(553, 324);
-            this.txtBatMain.TabIndex = 1;
-            this.txtBatMain.Text = "---List---";
+            this.txtLstCmd.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLstCmd.Location = new System.Drawing.Point(3, 3);
+            this.txtLstCmd.Multiline = true;
+            this.txtLstCmd.Name = "txtBatMain";
+            this.txtLstCmd.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.txtLstCmd.Size = new System.Drawing.Size(553, 324);
+            this.txtLstCmd.TabIndex = 1;
+            this.txtLstCmd.Text = "---List---";
             // 
             // tabCntrl
             // 
@@ -104,7 +107,7 @@
             // 
             // pageList
             // 
-            this.pageList.Controls.Add(this.txtBatMain);
+            this.pageList.Controls.Add(this.txtLstCmd);
             this.pageList.Location = new System.Drawing.Point(4, 23);
             this.pageList.Name = "pageList";
             this.pageList.Padding = new System.Windows.Forms.Padding(3);
@@ -135,21 +138,12 @@
             this.pageSettings.Text = "Settings";
             this.pageSettings.UseVisualStyleBackColor = true;
             // 
-            // bttnRun
-            // 
-            this.bttnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.bttnRun.Location = new System.Drawing.Point(4, 371);
-            this.bttnRun.Name = "bttnRun";
-            this.bttnRun.Size = new System.Drawing.Size(559, 25);
-            this.bttnRun.TabIndex = 3;
-            this.bttnRun.Text = "Run";
-            this.bttnRun.UseVisualStyleBackColor = true;
-            this.bttnRun.Click += new System.EventHandler(this.button1_Click);
-            // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.bttnSelect);
+            this.panel1.Controls.Add(this.label3);
+            this.panel1.Controls.Add(this.txtCD);
             this.panel1.Controls.Add(this.txtValue10);
             this.panel1.Controls.Add(this.txtVar10);
             this.panel1.Controls.Add(this.txtValue09);
@@ -178,163 +172,201 @@
             this.panel1.Size = new System.Drawing.Size(553, 324);
             this.panel1.TabIndex = 0;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(2, 13);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(64, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "VARIABLE";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(208, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(45, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "VALUE";
-            // 
-            // txtVar01
-            // 
-            this.txtVar01.Location = new System.Drawing.Point(5, 29);
-            this.txtVar01.Name = "txtVar01";
-            this.txtVar01.Size = new System.Drawing.Size(200, 20);
-            this.txtVar01.TabIndex = 2;
-            // 
-            // txtValue01
-            // 
-            this.txtValue01.Location = new System.Drawing.Point(211, 29);
-            this.txtValue01.Name = "txtValue01";
-            this.txtValue01.Size = new System.Drawing.Size(320, 20);
-            this.txtValue01.TabIndex = 3;
-            // 
-            // txtValue02
-            // 
-            this.txtValue02.Location = new System.Drawing.Point(211, 55);
-            this.txtValue02.Name = "txtValue02";
-            this.txtValue02.Size = new System.Drawing.Size(320, 20);
-            this.txtValue02.TabIndex = 5;
-            // 
-            // txtVar02
-            // 
-            this.txtVar02.Location = new System.Drawing.Point(5, 55);
-            this.txtVar02.Name = "txtVar02";
-            this.txtVar02.Size = new System.Drawing.Size(200, 20);
-            this.txtVar02.TabIndex = 4;
-            // 
-            // txtValue03
-            // 
-            this.txtValue03.Location = new System.Drawing.Point(211, 81);
-            this.txtValue03.Name = "txtValue03";
-            this.txtValue03.Size = new System.Drawing.Size(320, 20);
-            this.txtValue03.TabIndex = 7;
-            // 
-            // txtVar03
-            // 
-            this.txtVar03.Location = new System.Drawing.Point(5, 81);
-            this.txtVar03.Name = "txtVar03";
-            this.txtVar03.Size = new System.Drawing.Size(200, 20);
-            this.txtVar03.TabIndex = 6;
-            // 
-            // txtValue04
-            // 
-            this.txtValue04.Location = new System.Drawing.Point(211, 107);
-            this.txtValue04.Name = "txtValue04";
-            this.txtValue04.Size = new System.Drawing.Size(320, 20);
-            this.txtValue04.TabIndex = 9;
-            // 
-            // txtVar04
-            // 
-            this.txtVar04.Location = new System.Drawing.Point(5, 107);
-            this.txtVar04.Name = "txtVar04";
-            this.txtVar04.Size = new System.Drawing.Size(200, 20);
-            this.txtVar04.TabIndex = 8;
-            // 
-            // txtValue05
-            // 
-            this.txtValue05.Location = new System.Drawing.Point(211, 133);
-            this.txtValue05.Name = "txtValue05";
-            this.txtValue05.Size = new System.Drawing.Size(320, 20);
-            this.txtValue05.TabIndex = 11;
-            // 
-            // txtVar05
-            // 
-            this.txtVar05.Location = new System.Drawing.Point(5, 133);
-            this.txtVar05.Name = "txtVar05";
-            this.txtVar05.Size = new System.Drawing.Size(200, 20);
-            this.txtVar05.TabIndex = 10;
-            // 
-            // txtValue06
-            // 
-            this.txtValue06.Location = new System.Drawing.Point(211, 159);
-            this.txtValue06.Name = "txtValue06";
-            this.txtValue06.Size = new System.Drawing.Size(320, 20);
-            this.txtValue06.TabIndex = 13;
-            // 
-            // txtVar06
-            // 
-            this.txtVar06.Location = new System.Drawing.Point(5, 159);
-            this.txtVar06.Name = "txtVar06";
-            this.txtVar06.Size = new System.Drawing.Size(200, 20);
-            this.txtVar06.TabIndex = 12;
-            // 
-            // txtValue07
-            // 
-            this.txtValue07.Location = new System.Drawing.Point(211, 185);
-            this.txtValue07.Name = "txtValue07";
-            this.txtValue07.Size = new System.Drawing.Size(320, 20);
-            this.txtValue07.TabIndex = 15;
-            // 
-            // txtVar07
-            // 
-            this.txtVar07.Location = new System.Drawing.Point(5, 185);
-            this.txtVar07.Name = "txtVar07";
-            this.txtVar07.Size = new System.Drawing.Size(200, 20);
-            this.txtVar07.TabIndex = 14;
-            // 
-            // txtValue08
-            // 
-            this.txtValue08.Location = new System.Drawing.Point(211, 211);
-            this.txtValue08.Name = "txtValue08";
-            this.txtValue08.Size = new System.Drawing.Size(320, 20);
-            this.txtValue08.TabIndex = 17;
-            // 
-            // txtVar08
-            // 
-            this.txtVar08.Location = new System.Drawing.Point(5, 211);
-            this.txtVar08.Name = "txtVar08";
-            this.txtVar08.Size = new System.Drawing.Size(200, 20);
-            this.txtVar08.TabIndex = 16;
-            // 
-            // txtValue09
-            // 
-            this.txtValue09.Location = new System.Drawing.Point(211, 237);
-            this.txtValue09.Name = "txtValue09";
-            this.txtValue09.Size = new System.Drawing.Size(320, 20);
-            this.txtValue09.TabIndex = 19;
-            // 
-            // txtVar09
-            // 
-            this.txtVar09.Location = new System.Drawing.Point(5, 237);
-            this.txtVar09.Name = "txtVar09";
-            this.txtVar09.Size = new System.Drawing.Size(200, 20);
-            this.txtVar09.TabIndex = 18;
-            // 
             // txtValue10
             // 
-            this.txtValue10.Location = new System.Drawing.Point(211, 263);
+            this.txtValue10.Location = new System.Drawing.Point(211, 253);
             this.txtValue10.Name = "txtValue10";
             this.txtValue10.Size = new System.Drawing.Size(320, 20);
             this.txtValue10.TabIndex = 21;
             // 
             // txtVar10
             // 
-            this.txtVar10.Location = new System.Drawing.Point(5, 263);
+            this.txtVar10.Location = new System.Drawing.Point(5, 253);
             this.txtVar10.Name = "txtVar10";
             this.txtVar10.Size = new System.Drawing.Size(200, 20);
             this.txtVar10.TabIndex = 20;
+            // 
+            // txtValue09
+            // 
+            this.txtValue09.Location = new System.Drawing.Point(211, 227);
+            this.txtValue09.Name = "txtValue09";
+            this.txtValue09.Size = new System.Drawing.Size(320, 20);
+            this.txtValue09.TabIndex = 19;
+            // 
+            // txtVar09
+            // 
+            this.txtVar09.Location = new System.Drawing.Point(5, 227);
+            this.txtVar09.Name = "txtVar09";
+            this.txtVar09.Size = new System.Drawing.Size(200, 20);
+            this.txtVar09.TabIndex = 18;
+            // 
+            // txtValue08
+            // 
+            this.txtValue08.Location = new System.Drawing.Point(211, 201);
+            this.txtValue08.Name = "txtValue08";
+            this.txtValue08.Size = new System.Drawing.Size(320, 20);
+            this.txtValue08.TabIndex = 17;
+            // 
+            // txtVar08
+            // 
+            this.txtVar08.Location = new System.Drawing.Point(5, 201);
+            this.txtVar08.Name = "txtVar08";
+            this.txtVar08.Size = new System.Drawing.Size(200, 20);
+            this.txtVar08.TabIndex = 16;
+            // 
+            // txtValue07
+            // 
+            this.txtValue07.Location = new System.Drawing.Point(211, 175);
+            this.txtValue07.Name = "txtValue07";
+            this.txtValue07.Size = new System.Drawing.Size(320, 20);
+            this.txtValue07.TabIndex = 15;
+            // 
+            // txtVar07
+            // 
+            this.txtVar07.Location = new System.Drawing.Point(5, 175);
+            this.txtVar07.Name = "txtVar07";
+            this.txtVar07.Size = new System.Drawing.Size(200, 20);
+            this.txtVar07.TabIndex = 14;
+            // 
+            // txtValue06
+            // 
+            this.txtValue06.Location = new System.Drawing.Point(211, 149);
+            this.txtValue06.Name = "txtValue06";
+            this.txtValue06.Size = new System.Drawing.Size(320, 20);
+            this.txtValue06.TabIndex = 13;
+            // 
+            // txtVar06
+            // 
+            this.txtVar06.Location = new System.Drawing.Point(5, 149);
+            this.txtVar06.Name = "txtVar06";
+            this.txtVar06.Size = new System.Drawing.Size(200, 20);
+            this.txtVar06.TabIndex = 12;
+            // 
+            // txtValue05
+            // 
+            this.txtValue05.Location = new System.Drawing.Point(211, 123);
+            this.txtValue05.Name = "txtValue05";
+            this.txtValue05.Size = new System.Drawing.Size(320, 20);
+            this.txtValue05.TabIndex = 11;
+            // 
+            // txtVar05
+            // 
+            this.txtVar05.Location = new System.Drawing.Point(5, 123);
+            this.txtVar05.Name = "txtVar05";
+            this.txtVar05.Size = new System.Drawing.Size(200, 20);
+            this.txtVar05.TabIndex = 10;
+            // 
+            // txtValue04
+            // 
+            this.txtValue04.Location = new System.Drawing.Point(211, 97);
+            this.txtValue04.Name = "txtValue04";
+            this.txtValue04.Size = new System.Drawing.Size(320, 20);
+            this.txtValue04.TabIndex = 9;
+            // 
+            // txtVar04
+            // 
+            this.txtVar04.Location = new System.Drawing.Point(5, 97);
+            this.txtVar04.Name = "txtVar04";
+            this.txtVar04.Size = new System.Drawing.Size(200, 20);
+            this.txtVar04.TabIndex = 8;
+            // 
+            // txtValue03
+            // 
+            this.txtValue03.Location = new System.Drawing.Point(211, 71);
+            this.txtValue03.Name = "txtValue03";
+            this.txtValue03.Size = new System.Drawing.Size(320, 20);
+            this.txtValue03.TabIndex = 7;
+            // 
+            // txtVar03
+            // 
+            this.txtVar03.Location = new System.Drawing.Point(5, 71);
+            this.txtVar03.Name = "txtVar03";
+            this.txtVar03.Size = new System.Drawing.Size(200, 20);
+            this.txtVar03.TabIndex = 6;
+            // 
+            // txtValue02
+            // 
+            this.txtValue02.Location = new System.Drawing.Point(211, 45);
+            this.txtValue02.Name = "txtValue02";
+            this.txtValue02.Size = new System.Drawing.Size(320, 20);
+            this.txtValue02.TabIndex = 5;
+            // 
+            // txtVar02
+            // 
+            this.txtVar02.Location = new System.Drawing.Point(5, 45);
+            this.txtVar02.Name = "txtVar02";
+            this.txtVar02.Size = new System.Drawing.Size(200, 20);
+            this.txtVar02.TabIndex = 4;
+            // 
+            // txtValue01
+            // 
+            this.txtValue01.Location = new System.Drawing.Point(211, 19);
+            this.txtValue01.Name = "txtValue01";
+            this.txtValue01.Size = new System.Drawing.Size(320, 20);
+            this.txtValue01.TabIndex = 3;
+            // 
+            // txtVar01
+            // 
+            this.txtVar01.Location = new System.Drawing.Point(5, 19);
+            this.txtVar01.Name = "txtVar01";
+            this.txtVar01.Size = new System.Drawing.Size(200, 20);
+            this.txtVar01.TabIndex = 2;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(208, 3);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(45, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "VALUE";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(2, 3);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(64, 13);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "VARIABLE";
+            // 
+            // bttnRun
+            // 
+            this.bttnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.bttnRun.Location = new System.Drawing.Point(4, 371);
+            this.bttnRun.Name = "bttnRun";
+            this.bttnRun.Size = new System.Drawing.Size(559, 25);
+            this.bttnRun.TabIndex = 3;
+            this.bttnRun.Text = "Run";
+            this.bttnRun.UseVisualStyleBackColor = true;
+            this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(2, 276);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(105, 13);
+            this.label3.TabIndex = 22;
+            this.label3.Text = "CurrentDirectory";
+            // 
+            // txtCD
+            // 
+            this.txtCD.Location = new System.Drawing.Point(5, 292);
+            this.txtCD.Name = "txtCD";
+            this.txtCD.Size = new System.Drawing.Size(445, 20);
+            this.txtCD.TabIndex = 21;
+            // 
+            // bttnSelect
+            // 
+            this.bttnSelect.Location = new System.Drawing.Point(456, 290);
+            this.bttnSelect.Name = "bttnSelect";
+            this.bttnSelect.Size = new System.Drawing.Size(75, 23);
+            this.bttnSelect.TabIndex = 23;
+            this.bttnSelect.Text = "Select";
+            this.bttnSelect.UseVisualStyleBackColor = true;
+            this.bttnSelect.Click += new System.EventHandler(this.bttnSelect_Click);
             // 
             // Form1
             // 
@@ -360,7 +392,7 @@
         #endregion
 
         private System.Windows.Forms.TextBox txtStdOut;
-        private System.Windows.Forms.TextBox txtBatMain;
+        private System.Windows.Forms.TextBox txtLstCmd;
         private System.Windows.Forms.TabControl tabCntrl;
         private System.Windows.Forms.TabPage pageList;
         private System.Windows.Forms.TabPage pageStdOut;
@@ -389,6 +421,9 @@
         private System.Windows.Forms.TextBox txtVar01;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Button bttnSelect;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtCD;
     }
 }
 

@@ -1,4 +1,4 @@
-﻿//複数のBatファイルを実行します
+﻿//複数のBatファイルや1行コマンドを実行します
 //
 //以下のサイトを参考にしました。
 // DOSコマンドを実行し出力データを取得する
@@ -22,88 +22,119 @@ namespace RunMultipleBatFiles
 {
     public partial class Form1 : Form
     {
-        //定数
-        private readonly string FN_BAT_MAIN = AppDomain.CurrentDomain.BaseDirectory + "List_Bat.txt";        
+        //パラメータ
+        private SettingParams settings = new SettingParams();
 
-        //環境変数リストとそのテキストボックス群の制御
-        private IO_EnvVars_To_TextBox lstEnvVar = new IO_EnvVars_To_TextBox();
-        private Dictionary<TextBox, TextBox> lstEnvVarBox = new Dictionary<TextBox, TextBox>();
+        //コマンドリスト
+        private ListCommand lstCmd = new ListCommand();
 
         //DOSコマンド実行クラス
         private DosCommand dos = new DosCommand();
+
+        //環境変数用テキストボックスをまとめるためのDictionary
+        private Dictionary<TextBox, TextBox> lstEnvVarBox = new Dictionary<TextBox, TextBox>();
 
         //コンストラクタ
         public Form1()
         {
             InitializeComponent();
 
-            //環境変数リスト関連のコントロールに値をセットする
-            lstEnvVar.InitWithXML();
-            lstEnvVarBox.Add(txtVar01, txtValue01);
-            lstEnvVarBox.Add(txtVar02, txtValue02);
-            lstEnvVarBox.Add(txtVar03, txtValue03);
-            lstEnvVarBox.Add(txtVar04, txtValue04);
-            lstEnvVarBox.Add(txtVar05, txtValue05);
-            lstEnvVarBox.Add(txtVar06, txtValue06);
-            lstEnvVarBox.Add(txtVar07, txtValue07);
-            lstEnvVarBox.Add(txtVar08, txtValue08);
-            lstEnvVarBox.Add(txtVar09, txtValue09);
-            lstEnvVarBox.Add(txtVar10, txtValue10);
-            lstEnvVar.Get(lstEnvVarBox);
-
-            //コマンドのリストが記述されたファイルの有無チェック
-            //ある場合は読み込み
-            //無い場合は空のファイルを作成
-            if (File.Exists(FN_BAT_MAIN))
+            try
             {
-                using (StreamReader sr = new StreamReader(FN_BAT_MAIN, Encoding.GetEncoding("utf-8")))
-                    txtBatMain.Text = sr.ReadToEnd();
+                //タイトルの表示
+                this.Text = "RunMultipleBatFiles " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
+
+                //コマンドリストと標準出力用テキストボックスをクリア
+                txtLstCmd.Text = "";
+                txtStdOut.Text = "";
+
+                //環境変数用テキストボックスをまとめる           
+                lstEnvVarBox.Add(txtVar01, txtValue01);
+                lstEnvVarBox.Add(txtVar02, txtValue02);
+                lstEnvVarBox.Add(txtVar03, txtValue03);
+                lstEnvVarBox.Add(txtVar04, txtValue04);
+                lstEnvVarBox.Add(txtVar05, txtValue05);
+                lstEnvVarBox.Add(txtVar06, txtValue06);
+                lstEnvVarBox.Add(txtVar07, txtValue07);
+                lstEnvVarBox.Add(txtVar08, txtValue08);
+                lstEnvVarBox.Add(txtVar09, txtValue09);
+                lstEnvVarBox.Add(txtVar10, txtValue10);
+
+                //パラメータ・コマンドリストの初期化用ファイルの読み込み
+                settings.InitWithXML();
+                lstCmd.InitWithXML();
+
+                //環境変数用テキストボックスに値をセットする
+                settings.GetEnvVars(ref lstEnvVarBox);
+
+                //Listタブを初期化しアクティブにする
+                txtLstCmd.Text = lstCmd.Content;
+                tabCntrl.SelectedTab = pageList;
+
+                //カレントディレクトリを表示
+                if (!string.IsNullOrWhiteSpace(settings.CurrentDirectory))
+                {
+                    Environment.CurrentDirectory = settings.CurrentDirectory;
+                }
+
+                txtCD.Text = Environment.CurrentDirectory;
             }
-            else
+            catch (Exception ex)
             {
-                txtBatMain.Text = "";
-
-                using (FileStream fs = File.Create(FN_BAT_MAIN))
-                    fs.Close();
+                //Listタブをアクティブにしてから、エラー内容を表示
+                tabCntrl.SelectedTab = pageStdOut;
+                txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
             }
 
-            //Listタブをアクティブにする
-            tabCntrl.SelectedTab = pageList;
-
-            //標準出力用テキストボックスをクリア
-            txtStdOut.Text = "";
-
-            //タイトルの表示
-            this.Text = "RunMultipleBatFiles " + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         //イベント
-        private void button1_Click(object sender, EventArgs e)
+        private void bttnSelect_Click(object sender, EventArgs e)
         {
             try
             {
-                //標準出力用テキストボックスをクリア
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.SelectedPath = Environment.CurrentDirectory;
+
+                if (fbd.ShowDialog() == DialogResult.OK)
+                {
+                    Environment.CurrentDirectory = fbd.SelectedPath;
+                    txtCD.Text = Environment.CurrentDirectory;
+                }
+            }
+            catch (Exception ex)
+            {
+                //Listタブをアクティブにしてから、エラー内容を表示
+                tabCntrl.SelectedTab = pageStdOut;
+                txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
+            }
+        }
+
+        private void bttnRun_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                lstCmd.Content = txtLstCmd.Text;
                 txtStdOut.Text = "";
 
                 //プロセスの環境変数をクリアする
-                for (int i = 0; i < lstEnvVar.GetNum(); i++)
+                for (int i = 0; i < settings.GetNum(); i++)
                 {
-                    if (!string.IsNullOrWhiteSpace(lstEnvVar.Variables[i]))
-                        Environment.SetEnvironmentVariable(lstEnvVar.Variables[i], null, EnvironmentVariableTarget.Process);
+                    if (!string.IsNullOrWhiteSpace(settings.Variables[i]))
+                        Environment.SetEnvironmentVariable(settings.Variables[i], null, EnvironmentVariableTarget.Process);
                 }
 
                 //プロセスの環境変数を更新
-                lstEnvVar.Set(lstEnvVarBox);
+                settings.SeEnvVars(lstEnvVarBox);
 
-                for (int i = 0; i < lstEnvVar.GetNum(); i++)
+                for (int i = 0; i < settings.GetNum(); i++)
                 {
-                    if (!string.IsNullOrWhiteSpace(lstEnvVar.Variables[i]))
-                        Environment.SetEnvironmentVariable(lstEnvVar.Variables[i], lstEnvVar.Values[i], EnvironmentVariableTarget.Process);
+                    if (!string.IsNullOrWhiteSpace(settings.Variables[i]))
+                        Environment.SetEnvironmentVariable(settings.Variables[i], settings.Values[i], EnvironmentVariableTarget.Process);
                 }
 
                 //標準出力タブをアクティブにする
                 tabCntrl.SelectedTab = pageStdOut;
-                Application.DoEvents();
 
                 //処理実行
                 Task runMultipleBatAsync = Task.Run(() => {
@@ -115,7 +146,9 @@ namespace RunMultipleBatFiles
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString(), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                //Listタブをアクティブにしてから、エラー内容を表示
+                tabCntrl.SelectedTab = pageStdOut;
+                txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
             }
         }
 
@@ -132,7 +165,7 @@ namespace RunMultipleBatFiles
             try
             {
                 //改行で分割
-                string[] lst_cmd = string.IsNullOrWhiteSpace(txtBatMain.Text) ? null : Regex.Split(txtBatMain.Text, "\r\n");
+                string[] lst_cmd = string.IsNullOrWhiteSpace(txtLstCmd.Text) ? null : Regex.Split(txtLstCmd.Text, "\r\n");
 
                 // 1行づつ実行
                 if (lst_cmd != null)
@@ -168,11 +201,13 @@ namespace RunMultipleBatFiles
                 }
                 else
                 {
-                    txtStdOut.Text = "Mainは空です";
+                    txtStdOut.Text = "List is empty.";
                 }
             }
             catch (Exception ex)
             {
+                //Listタブをアクティブにしてから、エラー内容を表示
+                tabCntrl.SelectedTab = pageStdOut;
                 txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
             }
             finally

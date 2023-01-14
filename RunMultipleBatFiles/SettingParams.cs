@@ -10,15 +10,17 @@ using System.Xml.Serialization;
 namespace RunMultipleBatFiles
 {
     /// <summary>
-    /// 環境変数リストをTextBoxに入出力するクラス
+    /// パラメータをセッティングするクラス
     /// </summary>
-    public class IO_EnvVars_To_TextBox
+    public class SettingParams
     {
+        [XmlIgnore]
         public readonly string FN_XML = AppDomain.CurrentDomain.BaseDirectory + "RunMultipleBatFiles.xml";
         public string[] Variables = new string[10] { "", "", "", "", "", "", "", "", "", "" };
         public string[] Values = new string[10] { "", "", "", "", "", "", "", "", "", "" };
+        public string CurrentDirectory = "";
 
-        public IO_EnvVars_To_TextBox()
+        public SettingParams()
         {
             // do nothing
         }
@@ -28,7 +30,7 @@ namespace RunMultipleBatFiles
             //環境変数リスト用XMLファイルの有無チェック
             //ある場合はXMLから逆シリアライズ
             //無い場合はシリアライズ
-            XmlSerializer ser = new XmlSerializer(typeof(IO_EnvVars_To_TextBox));
+            XmlSerializer ser = new XmlSerializer(typeof(SettingParams));
 
             if (!File.Exists(FN_XML))
             {
@@ -39,14 +41,15 @@ namespace RunMultipleBatFiles
             else
             {
                 StreamReader sr = new StreamReader(FN_XML, new UTF8Encoding(false));
-                IO_EnvVars_To_TextBox tmp = (IO_EnvVars_To_TextBox)ser.Deserialize(sr);
+                SettingParams tmp = (SettingParams)ser.Deserialize(sr);
                 this.Variables = tmp.Variables;
                 this.Values = tmp.Values;
+                this.CurrentDirectory = tmp.CurrentDirectory;
                 sr.Close();
             }
         }
 
-        public void Get(Dictionary<TextBox, TextBox> lstEnvVarBox)
+        public void GetEnvVars(ref Dictionary<TextBox, TextBox> lstEnvVarBox)
         {
             try
             {
@@ -68,7 +71,7 @@ namespace RunMultipleBatFiles
             }
         }
 
-        public void Set(Dictionary<TextBox, TextBox> lstEnvVarBox)
+        public void SeEnvVars(Dictionary<TextBox, TextBox> lstEnvVarBox)
         {
             try
             {
