@@ -25,14 +25,11 @@ namespace RunMultipleBatFiles
         //定数
         private readonly string FN_BAT_MAIN = AppDomain.CurrentDomain.BaseDirectory + "List_Bat.txt";        
 
-        //Processオブジェクト
-        private System.Diagnostics.Process proc = null;
-
-        //環境変数リストクラス関連
+        //環境変数リストとそのテキストボックス群の制御
         private IO_EnvVars_To_TextBox lstEnvVar = new IO_EnvVars_To_TextBox();
         private Dictionary<TextBox, TextBox> lstEnvVarBox = new Dictionary<TextBox, TextBox>();
 
-        //DOSコマンド実行
+        //DOSコマンド実行クラス
         private DosCommand dos = new DosCommand();
 
         //コンストラクタ
@@ -41,7 +38,7 @@ namespace RunMultipleBatFiles
             InitializeComponent();
 
             //環境変数リスト関連のコントロールに値をセットする
-            lstEnvVar.ReadFromXML();
+            lstEnvVar.InitWithXML();
             lstEnvVarBox.Add(txtVar01, txtValue01);
             lstEnvVarBox.Add(txtVar02, txtValue02);
             lstEnvVarBox.Add(txtVar03, txtValue03);
@@ -70,7 +67,7 @@ namespace RunMultipleBatFiles
                     fs.Close();
             }
 
-            //Listタブに変更する
+            //Listタブをアクティブにする
             tabCntrl.SelectedTab = pageList;
 
             //標準出力用テキストボックスをクリア
@@ -85,6 +82,7 @@ namespace RunMultipleBatFiles
         {
             try
             {
+                //標準出力用テキストボックスをクリア
                 txtStdOut.Text = "";
 
                 //プロセスの環境変数をクリアする
@@ -103,18 +101,16 @@ namespace RunMultipleBatFiles
                         Environment.SetEnvironmentVariable(lstEnvVar.Variables[i], lstEnvVar.Values[i], EnvironmentVariableTarget.Process);
                 }
 
-                //標準出力タブに変更
+                //標準出力タブをアクティブにする
                 tabCntrl.SelectedTab = pageStdOut;
                 Application.DoEvents();
 
                 //処理実行
                 Task runMultipleBatAsync = Task.Run(() => {
-                    if (this.InvokeRequired)
-                        this.Invoke((MethodInvoker)(() => runMultipleBat()));
-                    else
-                        runMultipleBat();
+                    this.Invoke((MethodInvoker)(() => runMultipleBat()));
                 });
 
+                //処理が終わるまで[Run]ボタンを押せないようにする
                 bttnRun.Enabled = false;
             }
             catch (Exception ex)
@@ -157,7 +153,12 @@ namespace RunMultipleBatFiles
                             Application.DoEvents();
 
                             dos.RunOneLine(cmd);
-                            txtStdOut.Text += dos.StandardOutput;
+                            //改行コードを\r\nに変換
+                            string tmp = Regex.Replace(dos.StandardOutput, "\\n", "\r\n");
+                            tmp = Regex.Replace(tmp, "\\r\\r", "\r");
+                            //文字色を無視
+                            tmp = Regex.Replace(tmp, "(\\u001b.*?m)", "");
+                            txtStdOut.Text += tmp;
                             Application.DoEvents();
                         }
 
@@ -176,6 +177,7 @@ namespace RunMultipleBatFiles
             }
             finally
             {
+                //処理が終了したので[Run]ボタンを押せるようにする
                 bttnRun.Enabled = true;
             }
         }

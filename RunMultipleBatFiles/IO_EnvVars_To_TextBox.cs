@@ -23,7 +23,7 @@ namespace RunMultipleBatFiles
             // do nothing
         }
 
-        public void ReadFromXML()
+        public void InitWithXML()
         {
             //環境変数リスト用XMLファイルの有無チェック
             //ある場合はXMLから逆シリアライズ
