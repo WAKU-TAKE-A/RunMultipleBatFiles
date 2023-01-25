@@ -35,6 +35,7 @@
             this.pageStdOut = new System.Windows.Forms.TabPage();
             this.pageSettings = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.chkIgnoreStdErr = new System.Windows.Forms.CheckBox();
             this.bttnSelect = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
             this.txtCD = new System.Windows.Forms.TextBox();
@@ -61,7 +62,6 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRun = new System.Windows.Forms.Button();
-            this.chkIgnoreStdErr = new System.Windows.Forms.CheckBox();
             this.tabCntrl.SuspendLayout();
             this.pageList.SuspendLayout();
             this.pageStdOut.SuspendLayout();
@@ -76,7 +76,7 @@
             this.txtStdOut.Multiline = true;
             this.txtStdOut.Name = "txtStdOut";
             this.txtStdOut.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtStdOut.Size = new System.Drawing.Size(553, 324);
+            this.txtStdOut.Size = new System.Drawing.Size(570, 347);
             this.txtStdOut.TabIndex = 0;
             this.txtStdOut.Text = "---StdOut---";
             // 
@@ -87,7 +87,7 @@
             this.txtLstCmd.Multiline = true;
             this.txtLstCmd.Name = "txtLstCmd";
             this.txtLstCmd.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.txtLstCmd.Size = new System.Drawing.Size(570, 387);
+            this.txtLstCmd.Size = new System.Drawing.Size(570, 347);
             this.txtLstCmd.TabIndex = 1;
             this.txtLstCmd.Text = "---List---";
             // 
@@ -112,7 +112,7 @@
             this.pageList.Location = new System.Drawing.Point(4, 23);
             this.pageList.Name = "pageList";
             this.pageList.Padding = new System.Windows.Forms.Padding(3);
-            this.pageList.Size = new System.Drawing.Size(576, 393);
+            this.pageList.Size = new System.Drawing.Size(576, 353);
             this.pageList.TabIndex = 1;
             this.pageList.Text = "List";
             this.pageList.UseVisualStyleBackColor = true;
@@ -123,7 +123,7 @@
             this.pageStdOut.Location = new System.Drawing.Point(4, 23);
             this.pageStdOut.Name = "pageStdOut";
             this.pageStdOut.Padding = new System.Windows.Forms.Padding(3);
-            this.pageStdOut.Size = new System.Drawing.Size(559, 330);
+            this.pageStdOut.Size = new System.Drawing.Size(576, 353);
             this.pageStdOut.TabIndex = 3;
             this.pageStdOut.Text = "StdOut";
             this.pageStdOut.UseVisualStyleBackColor = true;
@@ -173,6 +173,16 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(570, 347);
             this.panel1.TabIndex = 0;
+            // 
+            // chkIgnoreStdErr
+            // 
+            this.chkIgnoreStdErr.AutoSize = true;
+            this.chkIgnoreStdErr.Location = new System.Drawing.Point(6, 319);
+            this.chkIgnoreStdErr.Name = "chkIgnoreStdErr";
+            this.chkIgnoreStdErr.Size = new System.Drawing.Size(145, 17);
+            this.chkIgnoreStdErr.TabIndex = 24;
+            this.chkIgnoreStdErr.Text = "Ignore standard error";
+            this.chkIgnoreStdErr.UseVisualStyleBackColor = true;
             // 
             // bttnSelect
             // 
@@ -370,18 +380,9 @@
             this.bttnRun.UseVisualStyleBackColor = true;
             this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
             // 
-            // chkIgnoreStdErr
-            // 
-            this.chkIgnoreStdErr.AutoSize = true;
-            this.chkIgnoreStdErr.Location = new System.Drawing.Point(6, 319);
-            this.chkIgnoreStdErr.Name = "chkIgnoreStdErr";
-            this.chkIgnoreStdErr.Size = new System.Drawing.Size(145, 17);
-            this.chkIgnoreStdErr.TabIndex = 24;
-            this.chkIgnoreStdErr.Text = "Ignore standard error";
-            this.chkIgnoreStdErr.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 421);
@@ -389,6 +390,8 @@
             this.Controls.Add(this.tabCntrl);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.Form1_DragDrop);
+            this.DragEnter += new System.Windows.Forms.DragEventHandler(this.Form1_DragEnter);
             this.tabCntrl.ResumeLayout(false);
             this.pageList.ResumeLayout(false);
             this.pageList.PerformLayout();

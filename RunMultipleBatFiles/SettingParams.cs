@@ -26,28 +26,42 @@ namespace RunMultipleBatFiles
             // do nothing
         }
 
-        public void InitWithXML()
+        /// <summary>
+        /// XMLから読み込み（引数nullで初期化）
+        /// </summary>
+        /// <param name="fn"></param>
+        public void ReadXML(string fn = null)
         {
-            //環境変数リスト用XMLファイルの有無チェック
-            //ある場合はXMLから逆シリアライズ
-            //無い場合はシリアライズ
-            XmlSerializer ser = new XmlSerializer(typeof(SettingParams));
+            try
+            {
+                if (string.IsNullOrEmpty(fn))
+                    fn = FN_XML;
 
-            if (!File.Exists(FN_XML))
-            {
-                StreamWriter sw = new StreamWriter(FN_XML, false, new UTF8Encoding(false));
-                ser.Serialize(sw, this);
-                sw.Close();
+                //環境変数リスト用XMLファイルの有無チェック
+                //ある場合はXMLから逆シリアライズ
+                //無い場合はシリアライズ
+                XmlSerializer ser = new XmlSerializer(typeof(SettingParams));
+
+                if (!File.Exists(fn))
+                {
+                    StreamWriter sw = new StreamWriter(fn, false, new UTF8Encoding(false));
+                    ser.Serialize(sw, this);
+                    sw.Close();
+                }
+                else
+                {
+                    StreamReader sr = new StreamReader(fn, new UTF8Encoding(false));
+                    SettingParams tmp = (SettingParams)ser.Deserialize(sr);
+                    this.Variables = tmp.Variables;
+                    this.Values = tmp.Values;
+                    this.CurrentDirectory = tmp.CurrentDirectory;
+                    this.IgnoreStdErr = tmp.IgnoreStdErr;
+                    sr.Close();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                StreamReader sr = new StreamReader(FN_XML, new UTF8Encoding(false));
-                SettingParams tmp = (SettingParams)ser.Deserialize(sr);
-                this.Variables = tmp.Variables;
-                this.Values = tmp.Values;
-                this.CurrentDirectory = tmp.CurrentDirectory;
-                this.IgnoreStdErr = tmp.IgnoreStdErr;
-                sr.Close();
+                throw ex;
             }
         }
 

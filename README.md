@@ -40,7 +40,8 @@ C.bat
 1. 全てのbat処理で扱える環境変数をSettingsタブで10個まで設定することができます。http_proxyやhttps_proxyなどの環境変数をここで設定しておけば全てのbat処理で利用できます。bat処理内で変更することは可能ですが、次のbat処理内では再度Settingsタブの設定が有効になります。<br><br>
 1. カレントディレクトリをSettingsタブで指定することができます。これにより全てのbat処理で同一のカレントディレクトリで作業することが可能です。bat処理内で変更することは可能ですが、次のbat処理内では再度Settingsタブの設定が有効になります。<br><br>
 1. RunMultipleBatFiles.exeと同じフォルダにあるList_Bat.txtに上記の例のようなbatファイルの記述を書いておけば、起動時にListタブに読み込んでくれます。<br><br>
-1. RunMultipleBatFiles.exeと同じフォルダにあるRunMultipleBatFiles.xmlを適切に記述すれば、起動時にSettingsタブに環境変数を読み込んでくれます。
+1. RunMultipleBatFiles.exeと同じフォルダにあるRunMultipleBatFiles.xmlを適切に記述すれば、起動時にSettingsタブに環境変数を読み込んでくれます。<br><br>
+1. 設定用XMLやコマンドリストTXTをD&Dできるようにしました。（0.9.4.0以降）
 
 ## __ひとこと__
 
