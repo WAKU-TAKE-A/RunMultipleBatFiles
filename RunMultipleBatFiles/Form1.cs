@@ -8,6 +8,7 @@
 // オブジェクトのXMLシリアル化、逆シリアル化を行う
 // https://dobon.net/vb/dotnet/file/xmlserializer.html#section1
 
+using RunMultipleBatFiles.Properties;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -61,8 +62,8 @@ namespace RunMultipleBatFiles
                 lstEnvVarBox.Add(txtVar10, txtValue10);
 
                 //パラメータ・コマンドリストの初期化用ファイルの読み込み
-                settings.InitWithXML();
-                lstCmd.InitWithXML();
+                settings.ReadXML();
+                lstCmd.ReadTXT();
 
                 //環境変数用テキストボックスに値をセットする
                 settings.GetEnvVars(ref lstEnvVarBox);
@@ -73,9 +74,7 @@ namespace RunMultipleBatFiles
 
                 //カレントディレクトリを表示
                 if (!string.IsNullOrWhiteSpace(settings.CurrentDirectory))
-                {
                     Environment.CurrentDirectory = settings.CurrentDirectory;
-                }
 
                 txtCD.Text = Environment.CurrentDirectory;
 
@@ -156,6 +155,57 @@ namespace RunMultipleBatFiles
             }
         }
 
+        private void Form1_DragDrop(object sender, DragEventArgs e)
+        {
+            try
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+
+                foreach (var item in files)
+                {
+                    string ext = Path.GetExtension(item);
+
+                    if (ext.ToLower() == ".txt")
+                    {
+                        lstCmd.ReadTXT(item);
+                        txtLstCmd.Text = lstCmd.Content;
+                        tabCntrl.SelectedTab = pageList;
+                    }
+                    else if (ext.ToLower() == ".xml")
+                    {
+                        settings.ReadXML(item);
+                        settings.GetEnvVars(ref lstEnvVarBox);
+
+                        if (!string.IsNullOrWhiteSpace(settings.CurrentDirectory))
+                            Environment.CurrentDirectory = settings.CurrentDirectory;
+
+                        txtCD.Text = Environment.CurrentDirectory;
+                        chkIgnoreStdErr.Checked = settings.IgnoreStdErr;
+                        tabCntrl.SelectedTab = pageSettings;
+                    }
+                    else
+                    {
+                        // do nothing
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                //Listタブをアクティブにしてから、エラー内容を表示
+                tabCntrl.SelectedTab = pageStdOut;
+                txtStdOut.Text += "\r\nException:\r\n" + ex.Message + "\r\n";
+            }
+        }
+
+        private void Form1_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+                e.Effect = DragDropEffects.All;
+            else
+                e.Effect = DragDropEffects.None;
+        }
+
+        // 以下、処理
         private void scrollToBottom()
         {
             //スクロールバーを一番下に移動する
