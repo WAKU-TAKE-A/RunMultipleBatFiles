@@ -267,6 +267,7 @@ namespace RunMultipleBatFiles
             finally
             {
                 //処理が終了したので[Run]ボタンを押せるようにする
+                txtStdOut.Text += "\r\nDone.\r\n";
                 bttnRun.Enabled = true;
             }
         }
