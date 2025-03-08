@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Text;
 
 namespace RunMultipleBatFiles
 {
@@ -25,6 +26,7 @@ namespace RunMultipleBatFiles
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.RedirectStandardInput = false;
                 p.StartInfo.RedirectStandardError = true;
+                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
 
                 //ウィンドウを表示しないようにする
                 p.StartInfo.CreateNoWindow = true;
