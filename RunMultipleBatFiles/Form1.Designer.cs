@@ -62,6 +62,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.bttnRun = new System.Windows.Forms.Button();
+            this.chkEnableUtf8Encoding = new System.Windows.Forms.CheckBox();
             this.tabCntrl.SuspendLayout();
             this.pageList.SuspendLayout();
             this.pageStdOut.SuspendLayout();
@@ -103,7 +104,7 @@
             this.tabCntrl.Location = new System.Drawing.Point(0, 12);
             this.tabCntrl.Name = "tabCntrl";
             this.tabCntrl.SelectedIndex = 0;
-            this.tabCntrl.Size = new System.Drawing.Size(584, 380);
+            this.tabCntrl.Size = new System.Drawing.Size(584, 397);
             this.tabCntrl.TabIndex = 2;
             // 
             // pageList
@@ -134,7 +135,7 @@
             this.pageSettings.Location = new System.Drawing.Point(4, 23);
             this.pageSettings.Name = "pageSettings";
             this.pageSettings.Padding = new System.Windows.Forms.Padding(3);
-            this.pageSettings.Size = new System.Drawing.Size(576, 353);
+            this.pageSettings.Size = new System.Drawing.Size(576, 370);
             this.pageSettings.TabIndex = 4;
             this.pageSettings.Text = "Settings";
             this.pageSettings.UseVisualStyleBackColor = true;
@@ -142,6 +143,7 @@
             // panel1
             // 
             this.panel1.AutoScroll = true;
+            this.panel1.Controls.Add(this.chkEnableUtf8Encoding);
             this.panel1.Controls.Add(this.chkIgnoreStdErr);
             this.panel1.Controls.Add(this.bttnSelect);
             this.panel1.Controls.Add(this.label3);
@@ -171,7 +173,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(570, 347);
+            this.panel1.Size = new System.Drawing.Size(570, 364);
             this.panel1.TabIndex = 0;
             // 
             // chkIgnoreStdErr
@@ -372,7 +374,7 @@
             // 
             this.bttnRun.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.bttnRun.Location = new System.Drawing.Point(4, 394);
+            this.bttnRun.Location = new System.Drawing.Point(4, 411);
             this.bttnRun.Name = "bttnRun";
             this.bttnRun.Size = new System.Drawing.Size(576, 25);
             this.bttnRun.TabIndex = 3;
@@ -380,12 +382,22 @@
             this.bttnRun.UseVisualStyleBackColor = true;
             this.bttnRun.Click += new System.EventHandler(this.bttnRun_Click);
             // 
+            // chkEnableUtf8Encoding
+            // 
+            this.chkEnableUtf8Encoding.AutoSize = true;
+            this.chkEnableUtf8Encoding.Location = new System.Drawing.Point(6, 342);
+            this.chkEnableUtf8Encoding.Name = "chkEnableUtf8Encoding";
+            this.chkEnableUtf8Encoding.Size = new System.Drawing.Size(157, 17);
+            this.chkEnableUtf8Encoding.TabIndex = 25;
+            this.chkEnableUtf8Encoding.Text = "Enable UTF-8 Encoding";
+            this.chkEnableUtf8Encoding.UseVisualStyleBackColor = true;
+            // 
             // Form1
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(584, 421);
+            this.ClientSize = new System.Drawing.Size(584, 438);
             this.Controls.Add(this.bttnRun);
             this.Controls.Add(this.tabCntrl);
             this.Name = "Form1";
@@ -440,6 +452,7 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.TextBox txtCD;
         private System.Windows.Forms.CheckBox chkIgnoreStdErr;
+        private System.Windows.Forms.CheckBox chkEnableUtf8Encoding;
     }
 }
 

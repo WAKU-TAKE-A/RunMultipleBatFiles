@@ -20,6 +20,7 @@ namespace RunMultipleBatFiles
         public string[] Values = new string[10] { "", "", "", "", "", "", "", "", "", "" };
         public string CurrentDirectory = "";
         public bool IgnoreStdErr = false;
+        public bool EnableUtf8Encoding = false;
 
         public SettingParams()
         {
@@ -56,6 +57,7 @@ namespace RunMultipleBatFiles
                     this.Values = tmp.Values;
                     this.CurrentDirectory = tmp.CurrentDirectory;
                     this.IgnoreStdErr = tmp.IgnoreStdErr;
+                    this.EnableUtf8Encoding = tmp.EnableUtf8Encoding;
                     sr.Close();
                 }
             }

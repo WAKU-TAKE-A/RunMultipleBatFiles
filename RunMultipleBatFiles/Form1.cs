@@ -80,6 +80,9 @@ namespace RunMultipleBatFiles
 
                 //標準エラーを無視するか否か
                 chkIgnoreStdErr.Checked = settings.IgnoreStdErr;
+
+                //出力のエンコードがUTF8か否か（否の場合はShift-JIS）
+                chkEnableUtf8Encoding.Checked = settings.EnableUtf8Encoding;
             }
             catch (Exception ex)
             {
@@ -119,6 +122,7 @@ namespace RunMultipleBatFiles
                 lstCmd.Content = txtLstCmd.Text;                
                 settings.CurrentDirectory = txtCD.Text;
                 settings.IgnoreStdErr = chkIgnoreStdErr.Checked;
+                settings.EnableUtf8Encoding = chkEnableUtf8Encoding.Checked;
                 txtStdOut.Text = "";
 
                 //プロセスの環境変数は一度クリアしてから更新する
@@ -181,6 +185,7 @@ namespace RunMultipleBatFiles
 
                         txtCD.Text = Environment.CurrentDirectory;
                         chkIgnoreStdErr.Checked = settings.IgnoreStdErr;
+                        chkEnableUtf8Encoding.Checked = settings.EnableUtf8Encoding;
                         tabCntrl.SelectedTab = pageSettings;
                     }
                     else
@@ -239,7 +244,7 @@ namespace RunMultipleBatFiles
                             scrollToBottom();
                             Application.DoEvents();
 
-                            dos.RunOneLine(cmd, settings.IgnoreStdErr);
+                            dos.RunOneLine(cmd, settings.IgnoreStdErr, settings.EnableUtf8Encoding);
                             //改行コードを\r\nに変換
                             string tmp = Regex.Replace(dos.StandardOutput, "\\n", "\r\n");
                             tmp = Regex.Replace(tmp, "\\r\\r", "\r");

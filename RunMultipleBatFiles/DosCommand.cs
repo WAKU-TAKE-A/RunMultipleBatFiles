@@ -8,7 +8,7 @@ namespace RunMultipleBatFiles
     {
         public string StandardOutput = "";
 
-        public bool RunOneLine(string command = "", bool ignoreStdErr = false)
+        public bool RunOneLine(string command = "", bool ignoreStdErr = false, bool enableUtf8Encoding = false)
         {
             // 結果をfalseにセット
             bool bret = false;
@@ -26,7 +26,17 @@ namespace RunMultipleBatFiles
                 p.StartInfo.RedirectStandardOutput = true;
                 p.StartInfo.RedirectStandardInput = false;
                 p.StartInfo.RedirectStandardError = true;
-                p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+
+                if (enableUtf8Encoding)
+                {
+                    p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+                    p.StartInfo.StandardErrorEncoding = Encoding.UTF8;
+                }
+                else
+                {
+                    p.StartInfo.StandardOutputEncoding = Encoding.GetEncoding("shift_jis");
+                    p.StartInfo.StandardErrorEncoding = Encoding.GetEncoding("shift_jis");
+                }
 
                 //ウィンドウを表示しないようにする
                 p.StartInfo.CreateNoWindow = true;
